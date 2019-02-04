@@ -1,3 +1,6 @@
-export * from './lib/async';
-export * from './lib/hash';
-export * from './lib/number';
+// isValidAddress
+export * from './lib/address';
+// Client
+export * from './lib/client';
+// toSiacoins and toHastings
+export * from './lib/currency';

@@ -3,6 +3,7 @@ import fs from 'fs';
 import http from 'http';
 import request from 'request';
 import rp from 'request-promise-native';
+import { Url } from 'url';
 import { parseFlags } from './flags';
 import { ClientConfig } from './proto';
 import { getSiaPassword } from './utils';
@@ -64,7 +65,7 @@ export class Client {
   };
 
   public makeRequest = async (
-    endpoint: string,
+    endpoint: string | Url,
     querystring?: object,
     method: string = 'GET',
     timeout: number = 30000
@@ -82,6 +83,17 @@ export class Client {
       return data;
     } catch (e) {
       throw new Error(e);
+    }
+  };
+
+  public call = (options: rp.OptionsWithUrl | string) => {
+    if (typeof options === 'string') {
+      return this.makeRequest(options);
+    } else {
+      const endpoint = options.url;
+      const method = options.method;
+      const qs = options.qs;
+      return this.makeRequest(endpoint, qs, method);
     }
   };
 
@@ -120,14 +132,18 @@ export class Client {
     }
   };
 
+  public getConnectionUrl = (): string => {
+    return `http://:${this.config.apiAuthenticationPassword}@${
+      this.config.apiHost
+    }:${this.config.apiPort}`;
+  };
+
   private mergeDefaultRequestOptions = (
     opts: rp.OptionsWithUrl
   ): rp.OptionsWithUrl => {
     // These are the default config sourced from the Sia Agent
     const defaultOptions: request.CoreOptions = {
-      baseUrl: `http://:${this.config.apiAuthenticationPassword}@${
-        this.config.apiHost
-      }:${this.config.apiPort}`,
+      baseUrl: this.getConnectionUrl(),
       headers: {
         'User-Agent': this.config.agent || 'Sia-Agent'
       },

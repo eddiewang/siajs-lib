@@ -10,10 +10,10 @@ BigNumber.config({ DECIMAL_PLACES: 30 });
 // calculate the conversion between the base unit to human readable values.
 const hastingsPerSiacoin = new BigNumber('10').exponentiatedBy(24);
 
-export function toSiacoins(hastings: BigNumber.Value) {
+export function toSiacoins(hastings: BigNumber | number) {
   return new BigNumber(hastings).dividedBy(hastingsPerSiacoin);
 }
 
-export function toHastings(siacoins: BigNumber.Value) {
+export function toHastings(siacoins: BigNumber | number) {
   return new BigNumber(siacoins).times(hastingsPerSiacoin);
 }

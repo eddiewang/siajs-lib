@@ -1,3 +1,3 @@
 # siajs-lib
 
-A library to interface with the Sia daemon
+A library to interface with the Sia daemon. Docs pending.

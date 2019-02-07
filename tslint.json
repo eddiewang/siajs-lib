@@ -5,7 +5,6 @@
     // TODO: allow devDependencies only in **/*.spec.ts files:
     // waiting on https://github.com/palantir/tslint/pull/3708
     "no-implicit-dependencies": [true, "dev"],
-    "no-unused-variable": [true, { "ignore-pattern": "^_" }],
     "object-literal-sort-keys": false
   }
 }

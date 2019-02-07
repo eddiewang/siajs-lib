@@ -149,7 +149,7 @@ export class Client {
       pool: this.agent,
       timeout: 10000
     };
-    const formattedOptions = {...defaultOptions, ...opts};
+    const formattedOptions = { ...defaultOptions, ...opts };
     return formattedOptions;
   };
 }

@@ -74,13 +74,3 @@ test('can replace client config', t => {
   t.true(some(a, x => x.includes('--sia-directory=bar')));
   t.true(some(a, x => x.includes('--temp-password=foo')));
 });
-
-test('create client and call', async t => {
-  try {
-    const client = new Client();
-    const results = await client.daemonVersion();
-    t.log('results are', results);
-  } catch (e) {
-    t.log('errror', e);
-  }
-});

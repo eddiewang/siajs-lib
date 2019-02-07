@@ -66,7 +66,7 @@ export class Client {
 
   public makeRequest = async (
     endpoint: string | Url,
-    querystring?: object,
+    querystring?: object | undefined,
     method: string = 'GET',
     timeout: number = 30000
   ) => {
@@ -74,9 +74,7 @@ export class Client {
       const requestOptions = this.mergeDefaultRequestOptions({
         url: endpoint,
         timeout,
-        qs: {
-          ...querystring
-        },
+        qs: querystring,
         method
       });
       const data = await rp(requestOptions);
@@ -92,7 +90,7 @@ export class Client {
     } else {
       const endpoint = options.url;
       const method = options.method;
-      const qs = options.qs;
+      const qs = options.qs || undefined;
       return this.makeRequest(endpoint, qs, method);
     }
   };
@@ -151,7 +149,7 @@ export class Client {
       pool: this.agent,
       timeout: 10000
     };
-    const formattedOptions = { ...defaultOptions, ...opts };
+    const formattedOptions = {...defaultOptions, ...opts};
     return formattedOptions;
   };
 }
